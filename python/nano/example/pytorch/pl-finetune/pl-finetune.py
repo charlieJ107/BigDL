@@ -323,7 +323,7 @@ def cli_main():
                    seed_everything_default=1234, trainer_class=Trainer)
     end = time.time()
 
-    throughput=15*32/(end-start) # epoches*batch_size/(end-start)
+    throughput=15*250/(end-start) # epoches*data_size/(end-start)
     print("thourgput:", throughput)
 
 if __name__ == "__main__":
