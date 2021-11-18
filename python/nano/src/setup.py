@@ -74,7 +74,7 @@ def download_libs(url: str):
 #    python setup.py bdist_wheel --plat-name darwin-x86_64
 # 
 # `plat_name` will be assigned as `darwin-x86_64`, which means building wheel for MacOS.
-plat_name = "linux-x86_64"
+plat_name = "manylinux2010_x86_64"
 
 class bdist_wheel(_bdist_wheel):
     def run(self):
