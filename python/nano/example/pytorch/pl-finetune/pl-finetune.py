@@ -264,19 +264,19 @@ class TransferLearningModel(pl.LightningModule):
 
         return train_loss
 
-    def validation_step(self, batch, batch_idx):
-        # 1. Forward pass:
-        x, y = batch
-        y_logits = self.forward(x)
-        y_scores = torch.sigmoid(y_logits)
-        y_true = y.view((-1, 1)).type_as(x)
+    # def validation_step(self, batch, batch_idx):
+    #     # 1. Forward pass:
+    #     x, y = batch
+    #     y_logits = self.forward(x)
+    #     y_scores = torch.sigmoid(y_logits)
+    #     y_true = y.view((-1, 1)).type_as(x)
 
-        # 2. Compute loss
-        self.log("val_loss", self.loss(y_logits, y_true), prog_bar=True)
+    #     # 2. Compute loss
+    #     self.log("val_loss", self.loss(y_logits, y_true), prog_bar=True)
 
-        # 3. Compute accuracy:
-        self.log("val_acc", self.valid_acc(
-            y_scores, y_true.int()), prog_bar=True)
+    #     # 3. Compute accuracy:
+    #     self.log("val_acc", self.valid_acc(
+    #         y_scores, y_true.int()), prog_bar=True)
 
     def configure_optimizers(self):
         parameters = list(self.parameters())
@@ -316,10 +316,15 @@ class MyLightningCLI(LightningCLI):
 
 def cli_main():
     from bigdl.nano.pytorch.trainer import Trainer
+    import time
 
+    start = time.time()
     MyLightningCLI(TransferLearningModel, CatDogImageDataModule,
                    seed_everything_default=1234, trainer_class=Trainer)
+    end = time.time()
 
+    throughput=15*32/(end-start) # epoches*batch_size/(end-start)
+    print("thourgput:", throughput)
 
 if __name__ == "__main__":
     cli_lightning_logo()
