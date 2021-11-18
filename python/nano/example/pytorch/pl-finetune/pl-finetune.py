@@ -128,7 +128,7 @@ class CatDogImageDataModule(LightningDataModule):
     def prepare_data(self):
         """Download images and prepare images datasets."""
         download_and_extract_archive(
-            url=DATA_URL, download_root=self._dl_path, remove_finished=True)
+            url=DATA_URL, download_root=self._dl_path, remove_finished=False)
 
     @property
     def data_path(self):
